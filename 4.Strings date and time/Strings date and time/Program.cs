@@ -96,10 +96,6 @@ namespace Strings_date_and_time
 
             Console.WriteLine(3.ToString("C",CultureInfo.GetCultureInfo("en-GB")));
 
-            object[] array1 = new object[] { 1, "string" };
-     
-            foreach (Object element in array1) 
-            { Console.WriteLine(element); }
 
         }   
     }

@@ -1,22 +1,22 @@
 ﻿using FindPetOwner;
 using System.Collections.Generic;
 
-NonGroupMember user1 = new NonGroupMember("Jaime", "Lannister");
-NonGroupMember user2 = new NonGroupMember("Arya", "Stark");
-NonGroupMember user3 = new NonGroupMember("Theon", "Greyjoy");
+NonGroupMember user1 = new NonGroupMember(5,"Jaime", "Lannister");
+NonGroupMember user2 = new NonGroupMember(6,"Arya", "Stark");
+NonGroupMember user3 = new NonGroupMember(7,"Theon", "Greyjoy");
 
-GroupMember user4 = new GroupMember("Ana", "Danciu");
-GroupMember user5 = new GroupMember("Carmen", "Amariei");
-GroupMember user6 = new GroupMember("Ana", "Coroiu");
-GroupMember user7 = new GroupMember("Gheorghina", "Ariel");
+GroupMember user4 = new GroupMember(1,"Ana", "Danciu");
+GroupMember user5 = new GroupMember(2,"Carmen", "Amariei");
+GroupMember user6 = new GroupMember(3,"Ana", "Coroiu");
+GroupMember user7 = new GroupMember(4,"Gheorghina", "Ariel");
 
 TimeOnly[] liber = { new TimeOnly(10, 0), new TimeOnly(11, 0) };
 double[] gpsLocation = {1145.456, 111457,80 };
 
-Post post1 = new Post(new int[]{ 1, 2 },"telefon1","adresa1",liber,"comentariu", gpsLocation,user1 );
-Post post2 = new Post(new int[]{ 1, 2 },"telefon2","adresa2",liber,"comentariu", gpsLocation,user2 );
-Post post3 = new Post(new int[]{ 1, 2 },"telefon3","adresa3",liber,"comentariu", gpsLocation,user3 );
-Post post4 = new Post(new int[]{ 1, 2 },"telefon3","adresa3",liber,"comentariu", gpsLocation,user3 );
+Post post1 = new Post(new int[]{ 1, 2 },"telefon1","adresa1",liber,"comentariu post1", gpsLocation,1 );
+Post post2 = new Post(new int[]{ 1, 2 },"telefon2","adresa2",liber,"comentariu post 2", gpsLocation,2 );
+Post post3 = new Post(new int[]{ 1, 2 },"telefon3","adresa3",liber,"comentariu post3", gpsLocation,7 );
+Post post4 = new Post(new int[]{ 1, 2 },"telefon3","adresa3",liber,"comentariu post 4", gpsLocation,7 );
 
 Console.Write($"{ post1.Phone}, {post1.Address}, {string.Join(" ",post1.Availability)}, {post1.Comment}, {post1.status}\n");
 
@@ -50,11 +50,9 @@ Console.WriteLine("\nall except first 2 users");
 Display(exceptFirst2);
 
 
-// mai incearca chestia asta odata cu skip while is take while
-/*var userAna = users.Where(user => user.Surname is "Ana");
-Console.WriteLine("\nsurname Ana");
-Display(userAna);*/
-
+var userAna = users.SkipWhile(user => user.Surname is "Jaime");
+Console.WriteLine("\n skip while surname Jaime");
+Display(userAna);
 
 //projection
 var selectName = users.Select(user => user.Name);
@@ -78,11 +76,11 @@ Console.WriteLine("\nreversed users seq.");
 Display(users);
 
 //grouping
-var groupByuser = posts.GroupBy(x => x.User);
+var groupByuser = posts.GroupBy(x => x.User_id);
 Console.WriteLine("\ngroup post by user");
 foreach(var group in groupByuser) 
 {foreach (var item in group) 
-    { Console.WriteLine(item.User); }
+    { Console.WriteLine(item.User_id); }
 }
 
 
@@ -115,13 +113,13 @@ foreach (KeyValuePair<string, User> kvp in map)
 { Console.WriteLine($" key { kvp.Key}, value { kvp.Value}"); }
 
 var toQueryTable = users.AsQueryable();
-Console.WriteLine($"users sequence type {users.GetType().Name}");
-Console.WriteLine($"toQueryTable sequence type {toQueryTable.GetType().Name}");
+Console.WriteLine($"\nusers sequence type {users.GetType().Name}");
+Console.WriteLine($"\ntoQueryTable sequence type {toQueryTable.GetType().Name}");
 
 //element operators
 
 var firstSName = users.FirstOrDefault(x=>x.Name.StartsWith('S'),user6);
-Console.WriteLine($"first name that starts with S. If none meet condition, returns user 6 {firstSName}");
+Console.WriteLine($"\nfirst name that starts with S. If none meet condition, returns user 6 {firstSName}");
 
 /*throws exception because of multiple results
  
@@ -130,47 +128,47 @@ Console.WriteLine(singleAName);*/
 
 
 var secondElement = users.ElementAt(1);
-Console.WriteLine($"second element {secondElement}");
+Console.WriteLine($"\nsecond element {secondElement}");
 
 
 //aggregation methods
 
 var nrOfUsers=users.Count();
 var nrOfUsersWithCondition=users.LongCount(x=>x.Name=="Stark");
-Console.WriteLine($"number of users {nrOfUsers}");
-Console.WriteLine($"number of users named Stark {nrOfUsersWithCondition}");
+Console.WriteLine($"\nnumber of users {nrOfUsers}");
+Console.WriteLine($"\nnumber of users named Stark {nrOfUsersWithCondition}");
 
 List<int> intList = new List<int>() { 2,4,6,9};
 var max = intList.Max();
 var sum = intList.Sum();
-Console.WriteLine($"max from intList is {max}");
-Console.WriteLine($"sum of intList elements is {max}");
+Console.WriteLine($"\nmax from intList is {max}");
+Console.WriteLine($"\nsum of intList elements is {max}");
 
 List<string> stringList = intList.ConvertAll(x => x.ToString());
 var stringAggregation = stringList.Aggregate((s1, s2) => s1+", "+s2);
-Console.WriteLine($"string aggregation result {stringAggregation}");
+Console.WriteLine($"\nstring aggregation result {stringAggregation}");
 
 //quantifiers
 
 var containsUser1=users.Contains(user1);
-Console.WriteLine($"users containes user1 : {containsUser1}");
+Console.WriteLine($"\nusers containes user1 : {containsUser1}");
 
 
 var anyDivideBy2=intList.Any(x=>x%2==0);
-Console.WriteLine($"does any of the elements divide by 2 : {anyDivideBy2}");
+Console.WriteLine($"\ndoes any of the elements divide by 2 : {anyDivideBy2}");
 
 
 var allDivideBy2 = intList.All(x => x % 2 == 0);
-Console.WriteLine($"do all elements divide by 2 : {allDivideBy2}");
+Console.WriteLine($"\ndo all elements divide by 2 : {allDivideBy2}");
 
 bool isEqual = users.SequenceEqual(users1);
-Console.WriteLine($"users equals users1: {isEqual}");
+Console.WriteLine($"\nusers equals users1: {isEqual}");
 
 //generation methods
 
 var emptySequence = Enumerable.Empty<int>();
 var repeatSequence = Enumerable.Repeat(intList, 2).ToList();
-Console.WriteLine($"repeated sequence");
+Console.WriteLine($"\nrepeated sequence");
 foreach (var item in repeatSequence)
 {
     Console.Write($"\n");
@@ -191,20 +189,59 @@ List<int> fruitPcs = new List<int>() {4, 2, 3 };
 List<string> fruits = new List<string>() {"apples", "bananas", "oranges" };
 
 var zipped = fruitPcs.Zip(fruits);
+Console.WriteLine($"\nzipped lists");
 Display(zipped);
 
 
 //extension methods
 string name = "Artiz2an";
-Console.WriteLine($"Extension1: does string contain numeric {name.DoesContainNumeric()}");
+Console.WriteLine($"\nExtension1: does string contain numeric {name.DoesContainNumeric()}");
 
-Console.WriteLine($"Extension2: every second element of {name}:");
+Console.WriteLine($"\nExtension2: every second element of {name}:");
 Display(name.EverySecondElement());
 
 
 var usersPosts = user3.ShowPosts(posts);
-Console.WriteLine($"Extension3: show users posts:");
+Console.WriteLine($"\nExtension3: show users posts:");
 Display(usersPosts);
+
+
+//query sintax
+Console.WriteLine($"\ninner join with query sintax");
+var innerJoinQuery = from user in users 
+                     join post in posts
+                     on user.Id equals post.User_id 
+                     select new {User = user.Id, Posted_by=post.User_id, Post_comment=post.Comment};
+Display(innerJoinQuery);
+
+
+//method syntax
+Console.WriteLine($"\ninner join with method sintax");
+var innerJoinMethod = users.Join(posts, 
+                    user => user.Id, post => post.User_id,
+                    (user, post) => new { User = user.Id, Posted_by = post.User_id, Post_comment = post.Comment});
+Display(innerJoinMethod);
+
+
+//query sintax
+Console.WriteLine($"\nleft join with query sintax, ordered by user id");
+var leftJoinQuery = from user in users
+                    join post in posts on user.Id equals post.User_id
+                    into UsersWithPosts
+                    from subpost in UsersWithPosts.DefaultIfEmpty()
+                    orderby user.Id
+                    select new { User = user.Id, Post_comment = subpost?.Comment?? String.Empty }; 
+Display(leftJoinQuery);
+
+
+//method syntax
+Console.WriteLine($"\nleft join with method sintax, ordered by user id");
+var leftJoinMethod = users.GroupJoin(posts,
+                    user => user.Id, post => post.User_id,
+                    (user, post) => new { user, post})
+                    .SelectMany(x=>x.post.DefaultIfEmpty(),(subuser,subpost)=>new { User = subuser.user.Id, Post_comment = subpost?.Comment ?? String.Empty }).OrderBy(x=>x.User);
+Display(leftJoinMethod);
+
 
 static void Display<T>(IEnumerable<T> sequence)
 {

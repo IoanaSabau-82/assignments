@@ -8,7 +8,7 @@ namespace FindPetOwner
 {
     internal class NonGroupMember : User
     {
-        public NonGroupMember(string surname, string name, string phone = "", string address = "") : base(surname, name, phone, address)
+        public NonGroupMember(int id, string surname, string name, string phone = "", string address = "") : base(id, surname, name, phone, address)
         {
         }
     }

@@ -18,10 +18,10 @@ namespace FindPetOwner
         
         public double[] GPSLocation { get; set; }
 
-        public User User { get; set; }
+        public int User_id{ get; set; }
         public Status status { get;}
 
-        public Post(int[] pictures, string phone, string address, TimeOnly[] availability, string comment, double[] gpslocation, User user)
+        public Post(int[] pictures, string phone, string address, TimeOnly[] availability, string comment, double[] gpslocation, int user_id)
         {
             Pictures = pictures;
             Phone = phone;
@@ -29,16 +29,17 @@ namespace FindPetOwner
             Availability = availability;
             Comment = comment;
             GPSLocation = gpslocation;
-            User = user;
+            User_id= user_id;
             status = Status.deschisa;
         }
             public enum Status { deschisa, inCurs, inchisa }
 
+        
         public override string ToString()
         {
-            return $"{User}'s post";
+            return $"User {User_id}'s post";
         }
-
+        
 
 
 

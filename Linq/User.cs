@@ -8,6 +8,7 @@ namespace FindPetOwner
 {
     public abstract class User
     {
+        public int Id { get; set; }
         public string Surname { get; set; }
 
         public string Name { get; set; }
@@ -15,8 +16,9 @@ namespace FindPetOwner
         public string Phone { get; set; } //optional
         public string Address { get; set; } //optional
 
-        public User(string surname, string name, string phone = "", string address = "")
+        public User(int id, string surname, string name, string phone = "", string address = "")
         {
+            Id = id;
             Surname = surname;
             Name = name;
             Phone = phone;
@@ -33,7 +35,7 @@ namespace FindPetOwner
     { 
     public static IEnumerable<Post> ShowPosts(this User user, List<Post> posts) 
         {
-            return posts.Where(x => x.User == user);
+            return posts.Where(x => x.User_id == user.Id);
         }
     }
 }

@@ -18,7 +18,7 @@ Post post2 = new Post(new int[]{ 1, 2 },"telefon2","adresa2",liber,"comentariu p
 Post post3 = new Post(new int[]{ 1, 2 },"telefon3","adresa3",liber,"comentariu post3", gpsLocation,7 );
 Post post4 = new Post(new int[]{ 1, 2 },"telefon3","adresa3",liber,"comentariu post 4", gpsLocation,7 );
 
-Console.Write($"{ post1.Phone}, {post1.Address}, {string.Join(" ",post1.Availability)}, {post1.Comment}, {post1.status}\n");
+//Console.Write($"{ post1.Phone}, {post1.Address}, {string.Join(" ",post1.Availability)}, {post1.Comment}, {post1.status}\n");
 
 
 List<User> users = new List<User>() { user1, user2, user3, user4, user5, user6, user7 };
@@ -31,10 +31,10 @@ HashSet<User> userSet2= new HashSet<User>() { user1, user2, user4};
 
 //filtering operators
 
-var gM = users.Where(user => user is GroupMember);
+var groupMember = users.Where(user => user is GroupMember);
 
 Console.WriteLine("\nonly group members");
-Display(gM);
+Display(groupMember);
 
 var first2 = users.Take(2);
 Console.WriteLine("\nfirst 2 users");
@@ -50,8 +50,8 @@ Console.WriteLine("\nall except first 2 users");
 Display(exceptFirst2);
 
 
-var userAna = users.SkipWhile(user => user.Surname is "Jaime");
-Console.WriteLine("\n skip while surname Jaime");
+var userAna = users.SkipWhile(user => user.Surname is "Ana");
+Console.WriteLine("\n skip while surname Ana");
 Display(userAna);
 
 //projection
@@ -242,6 +242,13 @@ var leftJoinMethod = users.GroupJoin(posts,
                     .SelectMany(x=>x.post.DefaultIfEmpty(),(subuser,subpost)=>new { User = subuser.user.Id, Post_comment = subpost?.Comment ?? String.Empty }).OrderBy(x=>x.User);
 Display(leftJoinMethod);
 
+var concerteElvis = from concert in Exercitiu.GetConcerts().Where(x=>x.Country=="Germany"&&(x.Year>1950||x.Year<1980))
+                    join singer in Exercitiu.GetSingers().Where(x => x.FirstName == "Elvis") on concert.SingerId equals singer.Id
+                    select new { Locatie = concert.Avenue};
+
+Display(concerteElvis);
+
+
 
 static void Display<T>(IEnumerable<T> sequence)
 {
@@ -251,3 +258,51 @@ static void Display<T>(IEnumerable<T> sequence)
     }
 
 }
+
+public class Exercitiu
+{
+    private IEnumerable<Singer> _singers; private IEnumerable<Concert> _concerts; public Exercitiu() { _singers = GetSingers(); _concerts = GetConcerts(); }
+    public static IEnumerable<Singer> GetSingers() 
+    { return new List<Singer>() { new Singer { Id = 1, FirstName = "Freddie", LastName = "Mercury" }, 
+        new Singer { Id = 2, FirstName = "Elvis", LastName = "Presley" }, 
+        new Singer { Id = 3, FirstName = "Chuck", LastName = "Berry" }, 
+        new Singer { Id = 4, FirstName = "Ray", LastName = "Charles" }, 
+        new Singer { Id = 5, FirstName = "David", LastName = "Bowie" } }; }
+    public static IEnumerable<Concert> GetConcerts()
+    {
+        return new List<Concert>()
+        {new Concert { SingerId = 2, Country = "Germany", Avenue = "Alianz", Year = 1979},
+            new Concert { SingerId = 1, Country = "USA", Avenue = "NYW", Year = 1980},
+            new Concert { SingerId = 1, Country = "Germany", Avenue = "Opera Nazional", Year = 1981},
+            new Concert { SingerId = 2, Country = "Germany", Avenue = "Berlin Arena", Year = 1970},
+            new Concert { SingerId = 2, Country = "Rusia", Avenue = "Lujniki", Year = 1968},
+            new Concert { SingerId = 3, Country = "UK", Avenue = "London Opera", Year = 1960},
+            new Concert { SingerId = 3, Country = "USA", Avenue = "Central Park", Year = 1961},
+            new Concert { SingerId = 2, Country = "Rusia", Avenue = "Red Square", Year = 1962},
+            new Concert { SingerId = 4, Country = "USA", Avenue = "Capitolium", Year = 1950},
+            new Concert { SingerId = 4, Country = "Romania", Avenue = "Arena nationala", Year = 1951},
+            new Concert { SingerId = 5, Country = "France", Avenue = "Verdun", Year = 1983}
+};
+    }
+}
+public class Singer { public int Id { get; set; } public string FirstName { get; set; } public string LastName { get; set; } }
+public class Concert { public int SingerId { get; set; } public string Avenue { get; set; } public int Year { get; set; } public string Country { get; set; } }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

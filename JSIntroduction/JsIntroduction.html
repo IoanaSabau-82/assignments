@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <!--
+    <script>
+       //alert("should not pop if scr attribute");
+    </script>
+        <script src="script1.js">
+            alert("should not pop if scr attribute");
+        </script>
+    <script src="script2.js"></script>
+    -->
+</head>
+
+<body>
+   <!--
+    <script>
+        alert("pas1");
+        alert("pas2");
+        </script>
+    -->
+
+ <!--
+    <script src="script2.js" async></script>
+    <p> Start document </p>
+    <script src="script1.js" async></script>
+   <p> End document </p>
+ -->
+
+    <script src="script2.js" defer></script>
+    <script src="script1.js" defer></script>
+    <p> Start document </p>
+   <p> End document </p>
+   <script>
+    //[1, 2].forEach(alert); //creeaza alerte distincte cu elementele din lista
+    //daca nu se pune ; dupa alerta, nu mai apar urmatoarele
+    //alert("After this alert we will have an error.")
+    //[1, 2].forEach(alert);
+
+
+</script>
+
+
+
+
+
+
+</body>
+</html>

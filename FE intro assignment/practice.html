@@ -1,0 +1,133 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <title id="demo">Simple Tags Demo</title>
+</head>
+
+<body onload="checkCookies()">
+
+  <h2>Game of Thrones<em>*</em></h2>
+  <a href="https://www.imdb.com/title/tt0944947/"><em>*</em>check out the plot on imdb</a>
+<br/>
+<br/>
+<br/>
+
+
+<img id="pic" src="GOT.jpg" alt="TheThrone" width="300" height="400" onclick="this.src ='daenerys_with_dragon.jpg'"/>
+<br />
+<br/>
+<br/>
+
+<button onclick=testF()>removeChild</button>
+
+<div id="test">
+  <p>1</p>
+  <p>2</p>
+</div>
+
+<p class="par">this is my paragraph</p>
+<p class="par">this is my other paragraph</p>
+
+<input type="text" id="fname" onchange="myFunction()">
+<br/>
+<br/>
+
+<div onmousedown="mDown(this)" onmouseup="mUp(this)"
+style="background-color:#D94A38;width:90px;height:20px; padding:40px;">
+Click Me</div>
+
+
+<h2>Bubbling Event</h2>
+ 
+<div id="parent">
+  <button>
+      <h2>Parent</h2>
+  </button>
+  <button id="child">
+       
+<p>Child</p>
+
+  </button>
+</div><br>
+
+
+<script>
+//modifica continutul titlului (1 sg element)
+document.getElementById("demo").innerHTML = "Hello World!"; // poti seta sau modifica continutul unui tag, adica textul dintre cele 2 taguri. 
+
+//preia info din tag
+let text = document.getElementById("demo").innerHTML;
+console.log(text);
+
+//modifica continutul mai multor elemente
+var start = document.getElementsByClassName("par");
+for(let i=0; i<start.length; i++)
+{
+  console.log(start[i].innerHTML);
+  start[i].innerHTML +=" ,you know?"; 
+}
+
+//ad culoare astericsuri
+var asterix = document.getElementsByTagName("em");
+for(let i=0; i<asterix.length; i++)
+{
+  console.log(i);
+  asterix[i].style.color = "red";
+};
+
+//creeaza un element nou
+let newEl = document.createElement("p");
+newEl.innerHTML="cucubau";
+document.body.append(newEl); //adauga elementul nou creat in pagina
+
+//removes a child
+function testF(){
+let list = document.getElementById("test");
+list.removeChild(list.firstElementChild);
+}
+
+function checkCookies() {
+    var text = "";
+    if (navigator.cookieEnabled == true) {
+        text = "Cookies are enabled.";
+    } else {
+        text = "Cookies are not enabled.";
+    }
+    document.getElementById("demo").innerHTML = text;
+}
+
+//changes value format
+function myFunction() {
+    var x = document.getElementById("fname");
+    x.value = x.value.toLowerCase();
+}
+
+//change style and inner html
+function mDown(obj) {
+    obj.style.backgroundColor = "#1ec5e5";
+    obj.innerHTML = "Release Me";
+}
+function mUp(obj) {
+    obj.style.backgroundColor="#D94A38";
+    obj.innerHTML="Thank You";
+}
+
+//bubbling event
+document.getElementById(
+"child").addEventListener("click", function () {
+            alert("You clicked the Child element!");
+        }, false).event.stopPropagation();
+ 
+document.getElementById(
+"parent").addEventListener("click", function () {
+            alert("You clicked the parent element!");
+        }, false);
+
+console.log(screen.width);
+console.log(window.location.href);
+console.log(window.location.protocol); 
+
+</script>
+</body>
+</html>

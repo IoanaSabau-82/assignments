@@ -115,9 +115,10 @@ function mUp(obj) {
 
 //bubbling event
 document.getElementById(
-"child").addEventListener("click", function () {
+"child").addEventListener("click", function (eveniment) {
             alert("You clicked the Child element!");
-        }, false).event.stopPropagation();
+            eveniment.stopPropagation();
+        }, false)
  
 document.getElementById(
 "parent").addEventListener("click", function () {

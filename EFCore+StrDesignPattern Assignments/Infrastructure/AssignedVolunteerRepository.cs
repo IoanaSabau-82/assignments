@@ -42,7 +42,7 @@ namespace Infrastructure
         public IEnumerable<AssignedVolunteer> GetAssignmentsToPosts(Guid id)
         {
             return _context.AssignedVolunteers.Where(x => x.AssignedTo.Id == id);
-                //.Include(a => a.Post);
+            //.Include(a => a.Post);
         }
 
         public void UpdateAssigned(AssignedVolunteer assignedVolunteer)
@@ -54,5 +54,7 @@ namespace Infrastructure
             toUpdate.AssignedStatus = assignedVolunteer.AssignedStatus;
             _context.SaveChanges();
         }
+
+
     }
 }

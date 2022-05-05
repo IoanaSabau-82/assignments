@@ -1,0 +1,34 @@
+<h3>receive data from parent component</h3>
+<p>{{receiveStringFromParent}}</p>
+<input [(ngModel)]="receiveFirst">
+
+
+<h3 #title>Send message to parent component</h3>
+<button (click)="onButtonClick()">Send Message</button>
+
+<h3>component to pass to the parrent</h3>
+
+
+<h3>template driven form</h3>
+    <form #form="ngForm" (ngSubmit)="onSubmit(form.value)">
+        <div>
+            <input [(ngModel)]="user.firstName" type="text" name="firstName" placeholder="first name" #firstName="ngModel" maxlength="5">
+            <div *ngIf="firstName.dirty">name dirty</div> 
+            <div *ngIf="firstName.touched">name touched</div>
+            <div *ngIf="!firstName.valid">name not valid</div>
+        </div>
+        <div>
+            <input [(ngModel)]="user.lastName" type="text" name="lastName" placeholder="last name">
+        </div>
+      <div>
+        <input [(ngModel)]="user.email" name="email" type="email" placeholder="email" #email="ngModel" (change)="onTouch(email)">
+
+      </div>
+      <div>
+        <input [(ngModel)]="user.phone" name="phone" type="text" placeholder="phone" required>
+      </div>
+
+      <button type="submit" class="btn btn-primary" [disabled]="!form.valid">Submit</button>
+    </form>
+
+    <app-user-form></app-user-form>

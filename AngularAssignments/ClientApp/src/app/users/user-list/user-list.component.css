@@ -1,0 +1,23 @@
+thead, th, td{
+    color: blanchedalmond;
+    background-color: darkblue;
+}
+
+th, td {
+    border: 1px solid blanchedalmond;
+}
+
+div {
+    margin-top: 20px;
+}
+
+.underline{
+    text-decoration: underline;
+}
+.line{
+    text-decoration: line-through;
+}
+
+h3{
+    margin-top: 20px;
+}

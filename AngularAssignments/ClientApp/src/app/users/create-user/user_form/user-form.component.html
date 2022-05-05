@@ -1,0 +1,10 @@
+
+    <h3>reactive form</h3>
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+    <div>
+        <input type="text" name="firstName" placeholder="first name" formControlName="firstName">
+        <input type="text" name="lastName" formControlName="lastName">
+        <input type="email" name="email" placeholder="last name" formControlName="email">
+        <input type="text" name="phone" placeholder="phone" formControlName="phone">
+    </div>
+    </form>

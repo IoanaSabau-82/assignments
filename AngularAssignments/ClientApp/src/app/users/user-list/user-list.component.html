@@ -1,0 +1,88 @@
+
+<header>
+    <title>{{pageTitle}}</title>
+</header>
+<body>
+    <p>{{pageTitle}}</p>
+    <div>
+    <ul *ngFor="let user of users; let first = first; let last = last" [ngClass]="{underline:first, line:last}">
+        <li>{{user.firstName}}</li>
+    </ul>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <td>First Name</td>
+                <td>Last Name</td>
+                <td>Position</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of users; let i = index">
+                <td>{{user.firstName}}</td>
+                <td>{{user.lastName}}</td>
+                <td> user at row {{i+1}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div>
+    <p [innerHTML]="someText"></p>
+    </div>
+
+    <div>
+    <a href={{aLink}}>click me</a>
+    </div>
+    
+    <div>
+        <button (click)="toggleImage()">{{showImage ?"now you see me" : "now you don't"}}</button>
+    </div>
+
+    <div><img *ngIf="showImage" [src] = "imageUrl" [style.width.px]="imageWidth"/></div>
+
+        <span>
+            <label for="id=1"> {{twoWayBind}} - edit the input to see me change</label>
+            <input id=1 type="text" [style.margin.px]="inputMargin" [(ngModel)] = "twoWayBind"> 
+        </span>
+         
+    <h3>using ngSwitch</h3>
+    <div [ngSwitch]="switchTrial">
+        <div *ngSwitchCase="10">ten</div>  
+        <div *ngSwitchCase="20">twenty</div>  
+        <div *ngSwitchDefault>Default Option is Displayed</div>  
+    </div>
+
+    <h3>message received from child</h3>
+    <p *ngIf="receiveHelloMessage;else showThis">{{receiveHelloMessage}}</p>
+
+    <ng-template #showThis>
+        wait for it
+    </ng-template>
+
+<div><button (click)="getDataFromCreateUser()">getDataFromCreateUser</button></div>
+<div>
+    <h3>trying some pipes</h3>
+    <p>no pipe {{now}}</p>
+    <p>short time {{now| date: "shortTime"}}</p>
+    <p>short datetime {{now| date: "short"}}</p>
+    <p>{{displayText| uppercase}}</p>
+    <p>the text was sliced {{displayText| slice:5:8}}</p>
+    <p>{{10|addValue}}</p>
+    <p>{{displayText| removeLetterE}}</p>
+</div>
+
+
+<app-create-user
+[receiveStringFromParent]="sendStringToChild" 
+[receiveObjectFromParent]="sendObjectToChild"
+[receiveFirst]="sendObjectToChild.firstName"
+(messageEvent)="displayMessage($event)"
+#create>
+</app-create-user>
+
+
+
+</body>
+
+ 
